@@ -1,6 +1,6 @@
 /* ==========================================================================
    CASULO — clínica de psicologia e cuidado integral
-   Home · HTML + CSS puros · mobile-first
+   Home · React + TypeScript · mobile-first
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -28,7 +28,6 @@
   --content: 1240px;
   --gutter: clamp(16px, 2.2vw, 24px);
   --radius: 28px;
-  --radius-lg: 40px;
   --section-y: 72px;
   --header-h: 64px;
 
@@ -133,18 +132,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.65;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .skip-link {
@@ -337,15 +324,21 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   gap: 9px;
   min-height: 44px;
   padding: 0 6px;
+  border: 0;
+  background: none;
   color: var(--ink);
+  font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 500;
+  line-height: inherit;
+  text-align: inherit;
   text-decoration: none;
+  cursor: pointer;
 }
 .menu-toggle svg { color: var(--sage); }
 
 /* --------------------------------------------------------------------------
-   6. Menu mobile (CSS puro, via :target)
+   6. Menu mobile (aberto/fechado por estado do React)
    -------------------------------------------------------------------------- */
 .menu-panel {
   position: fixed;
@@ -358,7 +351,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-.menu-panel:target {
+.menu-panel--open {
   display: flex;
   animation: panel-in 0.35s var(--ease) both;
 }
@@ -379,10 +372,16 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   gap: 8px;
   min-height: 44px;
   padding: 0 4px;
+  border: 0;
+  background: none;
   color: var(--ink);
+  font-family: var(--font-body);
   font-size: 0.9375rem;
   font-weight: 500;
+  line-height: inherit;
+  text-align: inherit;
   text-decoration: none;
+  cursor: pointer;
 }
 .menu-close svg { color: var(--sage); }
 
@@ -428,7 +427,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 .menu-foot p + p { margin-top: 4px; }
 .menu-foot a { color: var(--ink); text-underline-offset: 3px; }
 .menu-cvv { margin-top: 16px !important; color: var(--muted); }
-.menu-cvv a { color: var(--terracotta); font-weight: 700; }
 
 /* --------------------------------------------------------------------------
    7. Hero
@@ -1069,11 +1067,6 @@ details[open] .faq-answer { animation: answer-in 0.24s ease both; }
   line-height: 1.6;
 }
 .cvv-note strong { color: var(--terracotta); }
-.cvv-note a {
-  color: var(--terracotta);
-  font-weight: 700;
-  text-underline-offset: 3px;
-}
 
 .footer-bottom {
   display: flex;
@@ -1164,7 +1157,7 @@ details[open] .faq-answer { animation: answer-in 0.24s ease both; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .menu-panel:target { animation: none; }
+  .menu-panel--open { animation: none; }
 }
 
 /* --------------------------------------------------------------------------
